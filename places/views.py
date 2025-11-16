@@ -16,14 +16,16 @@ def show_index(request):
                 'properties': {
                     'title': place.title,
                     'placeId': place.id,
-                    'detailsUrl': {
-                        'imgs': [f'{img.image.url}' for img in place.imgs.all()],
-                        'description_short': place.description_short,
-                        'description_long': place.description_long,
-                    }
+                    'detailsUrl': ''
                 }
             }
             for place in places
         ]
     }
     return render(request, 'index.html', context={'feature_collection': data})
+
+                    # 'detailsUrl': {
+                    #     'imgs': [f'{img.image.url}' for img in place.imgs.all()],
+                    #     'description_short': place.description_short,
+                    #     'description_long': place.description_long,
+                    # }
