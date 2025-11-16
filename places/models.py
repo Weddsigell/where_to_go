@@ -40,6 +40,9 @@ class Image(models.Model):
         verbose_name='Картинка',
         upload_to='.'
     )
+    position = models.IntegerField(
+        verbose_name='Позиция',
+    )
     place = models.ForeignKey(
         Place,
         verbose_name='Место',
@@ -51,6 +54,12 @@ class Image(models.Model):
     class Meta:
         verbose_name = 'Каринка'
         verbose_name_plural = 'Картинки'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['place', 'position'],
+                name='unique_position_per_place'
+            )
+        ]
 
 
     def __str__(self):
