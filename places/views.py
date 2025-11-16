@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 from .models import Place
 
 
@@ -17,13 +18,13 @@ def show_index(request):
                 'properties': {
                     'title': place.title,
                     'placeId': place.id,
-                    'detailsUrl': show_place(request, place.id)
+                    'detailsUrl': reverse('place_info', args=[place.id])
                 }
             }
             for place in places
         ]
     }
-    
+
     return render(request, 'index.html', context={'feature_collection': data})
 
 
