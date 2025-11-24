@@ -1,9 +1,10 @@
 from django.contrib import admin
 from .models import Image, Place
 from django.utils.html import format_html
+from adminsortable2.admin import SortableAdminMixin, SortableStackedInline, SortableAdminBase
 
 
-class PlaceImageInline(admin.TabularInline):
+class PlaceImageInline(SortableStackedInline):
     model = Image
     extra = 1
     fields = ('image', 'get_preview', 'position')
@@ -12,6 +13,8 @@ class PlaceImageInline(admin.TabularInline):
 
     @admin.display(description="Предпросотр")
     def get_preview(self, obj):
+        if not obj.pk or not obj.image:
+            return 'Нет изображения'
         return format_html(
             '<img src="{}" style="max-height:200px; width:auto;" />',
             obj.image.url,
@@ -19,7 +22,7 @@ class PlaceImageInline(admin.TabularInline):
 
 
 @admin.register(Place)
-class PlaceAdmin(admin.ModelAdmin):
+class PlaceAdmin(SortableAdminBase, admin.ModelAdmin):
     inlines = [PlaceImageInline]
     list_display = (
         'title', 
@@ -29,7 +32,7 @@ class PlaceAdmin(admin.ModelAdmin):
 
 
 @admin.register(Image)
-class ImageAdmin(admin.ModelAdmin):
+class ImageAdmin(SortableAdminMixin, admin.ModelAdmin):
     list_display = (
         'place_title',
         'get_preview',
@@ -40,6 +43,8 @@ class ImageAdmin(admin.ModelAdmin):
 
     @admin.display(description="Предпросотр")
     def get_preview(self, obj):
+        if not obj.pk or not obj.image:
+            return 'Нет изображения'
         return format_html(
             '<img src="{}" style="max-height:200px; width:auto;" />',
             obj.image.url,

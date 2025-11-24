@@ -29,6 +29,7 @@ class Place(models.Model):
     class Meta:
         verbose_name = 'Место'
         verbose_name_plural = 'Места'
+        ordering = ['title']
 
 
     def __str__(self):
@@ -42,6 +43,7 @@ class Image(models.Model):
     )
     position = models.IntegerField(
         verbose_name='Позиция',
+        default=0
     )
     place = models.ForeignKey(
         Place,
@@ -54,12 +56,7 @@ class Image(models.Model):
     class Meta:
         verbose_name = 'Каринка'
         verbose_name_plural = 'Картинки'
-        constraints = [
-            models.UniqueConstraint(
-                fields=['place', 'position'],
-                name='unique_position_per_place'
-            )
-        ]
+        ordering = ['position']
 
 
     def __str__(self):
