@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinLengthValidator
+from tinymce.models import HTMLField
 
 
 class Place(models.Model):
@@ -10,11 +11,11 @@ class Place(models.Model):
             MinLengthValidator(3, 'Название должно быть от 3 до 300 символов')
         ],
     )
-    description_short = models.TextField(
+    description_short = HTMLField(
         verbose_name='Краткое описание',
         max_length=1000,
     )
-    description_long = models.TextField(
+    description_long = HTMLField(
         verbose_name='Полное описание',
         max_length=5000,
     )
