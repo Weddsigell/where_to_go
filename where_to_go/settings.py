@@ -32,15 +32,7 @@ DEBUG = env.bool('DJANGO_DEBUG', default=False)
 
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default='*')
 
-SECURE_HSTS_SECONDS = env.int('SECURE_HSTS_SECONDS')
-
-SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool('SECURE_HSTS_INCLUDE_SUBDOMAINS')
-
-SECURE_HSTS_PRELOAD = env.bool('SECURE_HSTS_PRELOAD')
-
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
