@@ -46,7 +46,7 @@ class Image(models.Model):
     )
     position = models.IntegerField(
         verbose_name='Позиция',
-        default=0
+        default=0,
     )
     place = models.ForeignKey(
         Place,
@@ -60,6 +60,9 @@ class Image(models.Model):
         verbose_name = 'Картинка'
         verbose_name_plural = 'Картинки'
         ordering = ['position']
+        indexes = [
+            models.Index(fields=['position']),
+        ]
 
 
     def __str__(self):
