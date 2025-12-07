@@ -13,9 +13,13 @@ class Place(models.Model):
     )
     short_description = HTMLField(
         verbose_name='Краткое описание',
+        null=True,
+        blank=True,
     )
     long_description = HTMLField(
         verbose_name='Полное описание',
+        null=True,
+        blank=True,
     )
     lng = models.FloatField(
         verbose_name='Долгота',
