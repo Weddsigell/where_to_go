@@ -11,11 +11,11 @@ class Place(models.Model):
             MinLengthValidator(3, 'Название должно быть от 3 до 300 символов')
         ],
     )
-    description_short = HTMLField(
+    short_description = HTMLField(
         verbose_name='Краткое описание',
         max_length=1000,
     )
-    description_long = HTMLField(
+    long_description = HTMLField(
         verbose_name='Полное описание',
         max_length=5000,
     )
