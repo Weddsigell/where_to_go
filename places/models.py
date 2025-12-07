@@ -36,7 +36,7 @@ class Place(models.Model):
 
 
     def __str__(self):
-        return f'{self.title}'
+        return self.title
 
 
 class Image(models.Model):
@@ -66,4 +66,4 @@ class Image(models.Model):
 
 
     def __str__(self):
-        return f'{self.place.title}'
+        return self.place.title
