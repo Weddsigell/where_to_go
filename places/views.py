@@ -5,7 +5,7 @@ from .models import Place
 
 
 def show_index(request):
-    places = Place.objects.all().prefetch_related('imgs')
+    places = Place.objects.all()
     data = {
         'type': 'FeatureCollection',
         'features': [
@@ -30,7 +30,7 @@ def show_index(request):
 
 def show_place(request, place_id):
     place_id = int(place_id)
-    place = get_object_or_404(Place, pk=place_id)
+    place = get_object_or_404(Place.objects.prefetch_related('imgs'), pk=place_id)
     data = {
         "title": place.title,
         "imgs": [
