@@ -6,7 +6,7 @@ from .models import Place
 
 def show_index(request):
     places = Place.objects.all()
-    data = {
+    geojson_features = {
         'type': 'FeatureCollection',
         'features': [
             {
@@ -25,13 +25,13 @@ def show_index(request):
         ]
     }
 
-    return render(request, 'index.html', context={'feature_collection': data})
+    return render(request, 'index.html', context={'feature_collection': geojson_features})
 
 
 def show_place(request, place_id):
     place_id = int(place_id)
     place = get_object_or_404(Place.objects.prefetch_related('imgs'), pk=place_id)
-    data = {
+    place_datails = {
         "title": place.title,
         "imgs": [
             img.image.url
@@ -46,7 +46,7 @@ def show_place(request, place_id):
     }
 
     return JsonResponse(
-        data,
+        place_datails,
         json_dumps_params={'ensure_ascii': False, 'indent': 4},
         content_type='application/json; charset=utf-8'
     )
