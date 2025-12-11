@@ -16,9 +16,17 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
-        response = requests.get(options["url"])
-        response.raise_for_status()
+        try:
+            response = requests.get(options['url'])
+            response.raise_for_status()
+        except Exception as e:
+            print(f'Не удалось загрузить JSON: {e}')
+            return
+        
         data = response.json()
+        if 'error' in data:
+            raise requests.exceptions.HTTPError(data['error'])
+        
 
         title = data['title']
         description_short = data['description_short']
@@ -37,6 +45,8 @@ class Command(BaseCommand):
         for img in data['imgs']:
             filename = Path(img).name
             content = get_image(img)
+            if not content: continue
+            
             image = Image.objects.create(
                 place=place,
                 image=ContentFile(content, name=filename)
@@ -44,6 +54,11 @@ class Command(BaseCommand):
 
 
 def get_image(url):
-        response = requests.get(url)
-        response.raise_for_status()
-        return response.content
+        try:
+            response = requests.get(url)
+            response.raise_for_status()
+            return response.content
+        except Exception as e:
+            print(f'Ошибка при загрузке изображения: {e}')
+            return None
+        
